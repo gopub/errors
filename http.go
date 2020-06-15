@@ -15,7 +15,7 @@ func PaymentRequired(format string, a ...interface{}) *Error {
 }
 
 func Forbidden(format string, a ...interface{}) *Error {
-	return Format(http.StatusPaymentRequired, format, a...)
+	return Format(http.StatusForbidden, format, a...)
 }
 
 func NotFound(format string, a ...interface{}) *Error {
