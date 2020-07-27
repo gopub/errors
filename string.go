@@ -1,15 +1,11 @@
 package errors
 
-type errString string
+type String string
 
-func (e errString) Error() string {
-	return string(e)
+func (s String) Error() string {
+	return string(s)
 }
 
 const (
-	NotExist errString = "not exist"
+	NotExist String = "not exist"
 )
-
-func String(s string) error {
-	return errString(s)
-}
