@@ -21,6 +21,7 @@ func As(err error, target interface{}) bool {
 	return errors.As(err, target)
 }
 
+// Cause returns the root cause error
 func Cause(err error) error {
 	for {
 		u, ok := err.(interface{ Unwrap() error })

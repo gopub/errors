@@ -1,6 +1,9 @@
 package errors
 
-import "strings"
+import (
+	"errors"
+	"strings"
+)
 
 type errorSlice []error
 
@@ -18,6 +21,24 @@ func (s errorSlice) Error() string {
 		return "no error"
 	}
 	return b.String()
+}
+
+func (s errorSlice) Unwrap() error {
+	for _, e := range s {
+		if u := errors.Unwrap(e); u != nil {
+			return u
+		}
+	}
+	return nil
+}
+
+func (s errorSlice) Is(err error) bool {
+	for _, e := range s {
+		if errors.Is(e, err) {
+			return true
+		}
+	}
+	return false
 }
 
 func Append(err error, errs ...error) error {
