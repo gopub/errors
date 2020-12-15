@@ -60,16 +60,16 @@ func GetCode(err error) int {
 		return http.StatusNotFound
 	}
 
-	if coder, ok := err.(interface{ Code() int }); ok {
-		return coder.Code()
-	}
-
 	if coder, ok := err.(interface{ Status() int }); ok {
 		return coder.Status()
 	}
 
 	if coder, ok := err.(interface{ StatusCode() int }); ok {
 		return coder.StatusCode()
+	}
+
+	if coder, ok := err.(interface{ Code() int }); ok {
+		return coder.Code()
 	}
 
 	if v := reflect.ValueOf(err); v.Kind() == reflect.Int {
