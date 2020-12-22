@@ -42,11 +42,21 @@ func (s errorSlice) Is(err error) bool {
 }
 
 func Append(err error, errs ...error) error {
-	if s, ok := err.(errorSlice); ok {
-		return append(s, errs...)
+	a, ok := err.(errorSlice)
+	if ok {
+		return append(a, errs...)
 	}
-	s := make(errorSlice, 0, 1+len(errs))
-	s = append(s, err)
-	s = append(s, errs...)
-	return s
+	a = make(errorSlice, 0, 1+len(errs))
+	if err != nil {
+		a = append(a, err)
+	}
+	for _, er := range errs {
+		if er != nil {
+			a = append(a, errs...)
+		}
+	}
+	if len(a) == 0 {
+		return nil
+	}
+	return a
 }
