@@ -21,6 +21,10 @@ func As(err error, target interface{}) bool {
 	return errors.As(err, target)
 }
 
+func Not(err, target error) bool {
+	return !errors.Is(err, target)
+}
+
 // Cause returns the root cause error
 func Cause(err error) error {
 	for {
