@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"reflect"
 	"strconv"
 )
@@ -126,4 +127,8 @@ func indirect(a interface{}) interface{} {
 		v = v.Elem()
 	}
 	return v.Interface()
+}
+
+func IsNotExist(err error) bool {
+	return Is(err, NotExist) || Is(err, sql.ErrNoRows) || Is(err, os.ErrNotExist)
 }
